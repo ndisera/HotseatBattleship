@@ -21,7 +21,7 @@ data class Game (var state: String, var turn: Int, val p1Info: PlayerInfo, val p
 
     fun toJSON(): String {
         val gson = Gson()
-        val drawing = Game(variable)
+        val drawing = Game(state, turn, p1Info, p2Info)
         return gson.toJson(drawing)
     }
 }

@@ -8,52 +8,98 @@ import java.util.*
 class Board {
     // true if space occupied by ship, false otherwise
     private val board = BooleanArray(100)
-    private val carrier = Ship("carrier", IntArray(5), IntArray(5))
-    private val battleship = Ship("battleship",  IntArray(4), IntArray(4))
-    private val cruiser = Ship("cruiser",  IntArray(3), IntArray(3))
-    private val submarine = Ship("submarine",  IntArray(3), IntArray(3))
-    private val destroyer = Ship("destroyer",  IntArray(2), IntArray(2))
+    private val carrier: Ship
+    private val battleship: Ship
+    private val cruiser: Ship
+    private val submarine: Ship
+    private val destroyer: Ship
 
     init {
         // randomly assign positions of ships
-        val random = Random()
-
-
-
-        // if no assignment works, reassign start point and repeat
+        carrier = Ship("carrier", randomAssign(5), IntArray(5))
+        battleship = Ship("battleship", randomAssign(4), IntArray(4))
+        cruiser = Ship("cruiser", randomAssign(3), IntArray(3))
+        submarine = Ship("submarine", randomAssign(3), IntArray(3))
+        destroyer = Ship("destroyer", randomAssign(2), IntArray(2))
 
     }
 
-    fun randomAssign(size: Int) {
-        val random = Random()
-        // randomly assign start point and then end point according to location size?
-        // check that it doesn't go out of bounds and doesn't overlap any other ship
-        var start = (0..99).random()
-        // reassign if necessary
-        while (board[start]) {
-            start = (0..99).random()
+    private fun randomAssign(size: Int): IntArray {
+        val options = mutableListOf<IntArray>()
+
+        // do this until we get a valid ship placement
+        while (options.isEmpty()) {
+            var start = (0..99).random()
+            // reassign if necessary
+            while (board[start]) {
+                start = (0..99).random()
+            }
+
+            // not too far left
+            if (start % 10 >= size - 1) {
+                val placement = IntArray(size)
+                var available = true
+                for (i: Int in 0 until size) {
+                    placement[i] = start - i
+                    if (board[start - i]) {
+                        available = false
+                        break
+                    }
+                }
+                if (available) {
+                    options.add(placement)
+                }
+            }
+            // not too far right
+            if (10 - start % 10 >= size - 1) {
+                val placement = IntArray(size)
+                var available = true
+                for (i: Int in 0 until size) {
+                    placement[i] = start + i
+                    if (board[start + i]) {
+                        available = false
+                        break
+                    }
+                }
+                if (available) {
+                    options.add(placement)
+                }
+            }
+            // not too high
+            if (start / 10 >= size - 1) {
+                val placement = IntArray(size)
+                var available = true
+                for (i: Int in 0 until size) {
+                    placement[i] = start - i * 10
+                    if (board[start - i * 10]) {
+                        available = false
+                        break
+                    }
+                }
+                if (available) {
+                    options.add(placement)
+                }
+            }
+            // not too low
+            if (100 - start / 10 >= size - 1) {
+                val placement = IntArray(size)
+                var available = true
+                for (i: Int in 0 until size) {
+                    placement[i] = start + i * 10
+                    if (board[start + i * 10]) {
+                        available = false
+                        break
+                    }
+                }
+                if (available) {
+                    options.add(placement)
+                }
+            }
         }
-
-        var end: Int
-
-        // 0 - 9
-        // 0, 10, 20, ..., 90
-        // cases
-        when ((0..3).random()) {
-            0 -> end = start - size
-            1 -> end = start + size
-            2 -> end = start - size * 10
-            3 -> end = start + size * 10
-        }
-
-        // if end is negative, redo
-        // if end is above 99, redo
-        // if start starts at 79 and end ends at 82
-        // if it overlaps with another ship (can just see if any of the positions are marked as true
-
-        // just divide this up initially
+        // now randomly select one of the options
+        return options[(0..options.size).random()]
     }
 
     // returns a random number provided in range
-    fun ClosedRange<Int>.random() = Random().nextInt(endInclusive - start) +  start
+    private fun ClosedRange<Int>.random() = Random().nextInt(endInclusive - start) + start
 }
