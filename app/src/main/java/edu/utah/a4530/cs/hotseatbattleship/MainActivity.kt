@@ -6,6 +6,11 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_main.*
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +32,22 @@ class MainActivity : AppCompatActivity() {
             }
         } else {
             externalStoragePermissionsChanged(true)
+        }
+
+        gameGrid.layoutManager = GridLayoutManager(this, 3)
+        gameGrid.adapter = GameAdapter()
+
+        newGameButton.setOnClickListener {
+
+        }
+
+        deleteGameButton.setOnClickListener {
+            if (deleteGameButton.text == "Delete an existing game") {
+                deleteGameButton.text = "Choose game to delete"
+            }
+            else {
+
+            }
         }
     }
 
