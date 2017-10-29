@@ -11,14 +11,17 @@ import kotlinx.android.synthetic.main.activity_turn_switch.*
 class TurnActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // still need to pass on index
+        val index = intent.getIntExtra("index", 0)
 
         nextTurnButton.setOnClickListener {
             val lastPlayer = intent.getStringExtra("player")
             val i = Intent(this, PlayerActivity::class.java)
             when (lastPlayer) {
-                "Player1" -> i.putExtra("player", "Player2")
-                "Player2" -> i.putExtra("player", "Player1")
+                "P1" -> i.putExtra("player", "P2")
+                "P2" -> i.putExtra("player", "P1")
             }
+            i.putExtra("index", index)
             startActivity(i)
         }
     }

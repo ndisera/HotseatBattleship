@@ -44,7 +44,7 @@ class GameSummaryView: FrameLayout {
     var p2UnsunkShips: String
         get() = p2UnsunkShipsTextView.text.toString()
         set(newP2Unsunk) {
-            p1UnsunkShipsTextView.text = newP2Unsunk
+            p2UnsunkShipsTextView.text = newP2Unsunk
         }
 
     override fun onFinishInflate() {

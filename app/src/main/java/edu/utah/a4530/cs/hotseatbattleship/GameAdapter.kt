@@ -1,19 +1,55 @@
 package edu.utah.a4530.cs.hotseatbattleship
 
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.ViewGroup
 
 /**
  * Created by Nico on 10/26/2017.
  */
 class GameAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    interface OnGameSelectedListener {
+        fun gameSelected(game: Game)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    var selectedItemIndex: Int = RecyclerView.NO_POSITION
+
+    class GameViewHolder(val gameSummaryView: GameSummaryView) : RecyclerView.ViewHolder(gameSummaryView)
+
+    private var onGameSelectedListener: OnGameSelectedListener? = null
+
+    fun setOnGameSelectedListener(onGameSelectedListener: ((game: Game) -> Unit)) {
+        this.onGameSelectedListener = object : OnGameSelectedListener {
+            override fun gameSelected(game: Game) {
+                onGameSelectedListener(game)
+            }
+        }
     }
 
     override fun getItemCount(): Int = GameCollection.size
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
+
+        return GameViewHolder(layoutInflater.inflate(R.layout.view_game_summary, parent, false) as GameSummaryView).apply {
+            gameSummaryView.setOnClickListener {
+                selectedItemIndex = adapterPosition
+                onGameSelectedListener?.gameSelected(GameCollection[adapterPosition])
+            }
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val datasetItem: Game = GameCollection[position]
+
+        if (holder !is GameViewHolder) {
+            throw AssertionError("Invalid ViewHolder was supplied for binding.")
+        }
+        holder.gameSummaryView.state = "Status: ${datasetItem.state}"
+        holder.gameSummaryView.turn = "Turn: ${datasetItem.turn}"
+        holder.gameSummaryView.p1UnsunkShips = "P1: ${datasetItem.p1Info.shipsLeft} ships left"
+        holder.gameSummaryView.p2UnsunkShips = "P2: ${datasetItem.p2Info.shipsLeft} ships left"
+
+    }
+
 }

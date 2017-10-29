@@ -1,21 +1,24 @@
 package edu.utah.a4530.cs.hotseatbattleship
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), GameAdapter.OnGameSelectedListener {
 
     companion object {
         private const val writePermissionCode: Int = 1
+        private var selectedIndex: Int = 0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,11 +37,18 @@ class MainActivity : AppCompatActivity() {
             externalStoragePermissionsChanged(true)
         }
 
-        gameGrid.layoutManager = GridLayoutManager(this, 3)
-        gameGrid.adapter = GameAdapter()
+        gameGrid.layoutManager = LinearLayoutManager(this)
+        val gameAdapter = GameAdapter()
+        gameAdapter.setOnGameSelectedListener { game ->
+            gameSelected(game)
+        }
+        selectedIndex = gameAdapter.selectedItemIndex
+        gameGrid.adapter = gameAdapter
 
         newGameButton.setOnClickListener {
-
+            GameCollection.add(Game("Starting", "P1", PlayerInfo(5, Board()), PlayerInfo(5, Board())))
+            GameCollection.reloadDataset()
+            gameGrid.adapter.notifyDataSetChanged()
         }
 
         deleteGameButton.setOnClickListener {
@@ -46,8 +56,26 @@ class MainActivity : AppCompatActivity() {
                 deleteGameButton.text = "Choose game to delete"
             }
             else {
-
+                deleteGameButton.text = "Delete an existing game"
             }
+        }
+
+    }
+
+    override fun gameSelected(game: Game) {
+        if (deleteGameButton.text == "Delete an existing game") {
+            val i = Intent(this, PlayerActivity::class.java)
+
+            // pass in index to grab game from game collection (not sure if this index will work)
+            i.putExtra("index", selectedIndex)
+            i.putExtra("player", "P1")
+            startActivity(intent)
+        }
+        else {
+            // it's in delete mode so instead of starting a game, delete it
+            GameCollection.delete(game)
+            GameCollection.reloadDataset()
+            deleteGameButton.text = "Delete an existing game"
         }
     }
 

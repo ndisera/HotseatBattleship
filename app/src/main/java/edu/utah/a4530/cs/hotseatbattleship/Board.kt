@@ -21,7 +21,6 @@ class Board {
         cruiser = Ship("cruiser", randomAssign(3), IntArray(3))
         submarine = Ship("submarine", randomAssign(3), IntArray(3))
         destroyer = Ship("destroyer", randomAssign(2), IntArray(2))
-
     }
 
     private fun randomAssign(size: Int): IntArray {
@@ -51,7 +50,7 @@ class Board {
                 }
             }
             // not too far right
-            if (10 - start % 10 >= size - 1) {
+            if (10 - start % 10 >= size) {
                 val placement = IntArray(size)
                 var available = true
                 for (i: Int in 0 until size) {
@@ -81,7 +80,7 @@ class Board {
                 }
             }
             // not too low
-            if (100 - start / 10 >= size - 1) {
+            if (10 - start / 10 >= size) {
                 val placement = IntArray(size)
                 var available = true
                 for (i: Int in 0 until size) {
