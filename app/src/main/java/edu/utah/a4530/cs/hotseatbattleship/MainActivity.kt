@@ -67,9 +67,13 @@ class MainActivity : AppCompatActivity(), GameAdapter.OnGameSelectedListener {
             val i = Intent(this, PlayerActivity::class.java)
 
             // pass in index to grab game from game collection (not sure if this index will work)
+            if (gameGrid.adapter !is GameAdapter) {
+                return
+            }
+            selectedIndex = (gameGrid.adapter as GameAdapter).selectedItemIndex
             i.putExtra("index", selectedIndex)
             i.putExtra("player", "P1")
-            startActivity(intent)
+            startActivity(i)
         }
         else {
             // it's in delete mode so instead of starting a game, delete it
