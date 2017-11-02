@@ -7,7 +7,7 @@ import java.util.*
  */
 class Board {
     // true if space occupied by ship, false otherwise
-    private val board = BooleanArray(100)
+    val board = IntArray(100)
     private val carrier: Ship
     private val battleship: Ship
     private val cruiser: Ship
@@ -30,7 +30,7 @@ class Board {
         while (options.isEmpty()) {
             var start = (0..99).random()
             // reassign if necessary
-            while (board[start]) {
+            while (board[start] == 1) {
                 start = (0..99).random()
             }
 
@@ -40,7 +40,7 @@ class Board {
                 var available = true
                 for (i: Int in 0 until size) {
                     placement[i] = start - i
-                    if (board[start - i]) {
+                    if (board[start - i] == 1) {
                         available = false
                         break
                     }
@@ -55,7 +55,7 @@ class Board {
                 var available = true
                 for (i: Int in 0 until size) {
                     placement[i] = start + i
-                    if (board[start + i]) {
+                    if (board[start + i] == 1) {
                         available = false
                         break
                     }
@@ -70,7 +70,7 @@ class Board {
                 var available = true
                 for (i: Int in 0 until size) {
                     placement[i] = start - i * 10
-                    if (board[start - i * 10]) {
+                    if (board[start - i * 10] == 1) {
                         available = false
                         break
                     }
@@ -85,7 +85,7 @@ class Board {
                 var available = true
                 for (i: Int in 0 until size) {
                     placement[i] = start + i * 10
-                    if (board[start + i * 10]) {
+                    if (board[start + i * 10] == 1) {
                         available = false
                         break
                     }
@@ -96,7 +96,13 @@ class Board {
             }
         }
         // now randomly select one of the options
-        return options[(0..options.size).random()]
+        val coords = options[(0..options.size).random()]
+        // set board cell value
+        for (point in coords) {
+            // set taken points to 1 to represent that that space is part of a ship
+            board[point] = 1
+        }
+        return coords
     }
 
     // returns a random number provided in range

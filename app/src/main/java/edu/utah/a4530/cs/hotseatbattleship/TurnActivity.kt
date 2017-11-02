@@ -8,9 +8,10 @@ import kotlinx.android.synthetic.main.activity_turn_switch.*
 /**
  * Created by Nico on 10/23/2017.
  */
-class TurnActivity: AppCompatActivity() {
+class TurnActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_turn_switch)
         // still need to pass on index
         val index = intent.getIntExtra("index", 0)
 

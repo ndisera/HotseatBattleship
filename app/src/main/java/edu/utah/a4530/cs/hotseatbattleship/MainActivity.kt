@@ -13,7 +13,6 @@ import android.support.v7.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-
 class MainActivity : AppCompatActivity(), GameAdapter.OnGameSelectedListener {
 
     companion object {
@@ -54,8 +53,7 @@ class MainActivity : AppCompatActivity(), GameAdapter.OnGameSelectedListener {
         deleteGameButton.setOnClickListener {
             if (deleteGameButton.text == "Delete an existing game") {
                 deleteGameButton.text = "Choose game to delete"
-            }
-            else {
+            } else {
                 deleteGameButton.text = "Delete an existing game"
             }
         }
@@ -74,8 +72,7 @@ class MainActivity : AppCompatActivity(), GameAdapter.OnGameSelectedListener {
             i.putExtra("index", selectedIndex)
             i.putExtra("player", "P1")
             startActivity(i)
-        }
-        else {
+        } else {
             // it's in delete mode so instead of starting a game, delete it
             GameCollection.delete(game)
             GameCollection.reloadDataset()

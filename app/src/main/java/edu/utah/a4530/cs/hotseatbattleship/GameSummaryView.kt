@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.view_game_summary.view.p2UnsunkShipsTextVi
 /**
  * Created by Nico on 10/26/2017.
  */
-class GameSummaryView: FrameLayout {
+class GameSummaryView : FrameLayout {
     constructor(context: Context?) : super(context)
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)

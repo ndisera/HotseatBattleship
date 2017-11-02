@@ -7,7 +7,7 @@ import java.util.*
  */
 data class Ship(val name: String, val location: IntArray, val positionStates: IntArray) {
 
-    override fun equals(other: Any?): Boolean{
+    override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other?.javaClass != javaClass) return false
 
@@ -18,7 +18,7 @@ data class Ship(val name: String, val location: IntArray, val positionStates: In
         return true
     }
 
-    override fun hashCode(): Int{
+    override fun hashCode(): Int {
         return Arrays.hashCode(location)
     }
 
