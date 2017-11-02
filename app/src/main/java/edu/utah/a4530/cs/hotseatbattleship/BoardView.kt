@@ -93,6 +93,9 @@ class BoardView : View {
             }
             canvas.drawRect(rectGrid[i], paint)
 
+            // might not check for anything other than misses
+            // can handle hits and sinks in a separate check (or can I?)
+
             if (modelBoard.board[i] != 0 && modelBoard.board[i] != 1) {
                 paint.style = Paint.Style.FILL
                 rectGrid[i]?.let {
@@ -101,7 +104,7 @@ class BoardView : View {
                         3, 4 -> Color.RED
                         else -> paint.color
                     }
-                    if (i == 4) {
+                    if (modelBoard.board[i] == 4) {
                         canvas.drawRect(it.left, it.top, it.right, it.bottom, paint)
 
                     } else {

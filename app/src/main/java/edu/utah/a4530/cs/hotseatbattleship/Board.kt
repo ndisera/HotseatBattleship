@@ -13,14 +13,16 @@ class Board {
     private val cruiser: Ship
     private val submarine: Ship
     private val destroyer: Ship
+    val shipArray: Array<Ship>
 
     init {
         // randomly assign positions of ships
-        carrier = Ship("carrier", randomAssign(5), IntArray(5))
-        battleship = Ship("battleship", randomAssign(4), IntArray(4))
-        cruiser = Ship("cruiser", randomAssign(3), IntArray(3))
-        submarine = Ship("submarine", randomAssign(3), IntArray(3))
-        destroyer = Ship("destroyer", randomAssign(2), IntArray(2))
+        carrier = Ship("carrier", randomAssign(5), false)
+        battleship = Ship("battleship", randomAssign(4), false)
+        cruiser = Ship("cruiser", randomAssign(3), false)
+        submarine = Ship("submarine", randomAssign(3), false)
+        destroyer = Ship("destroyer", randomAssign(2), false)
+        shipArray = arrayOf(carrier, battleship, cruiser, submarine, destroyer)
     }
 
     private fun randomAssign(size: Int): IntArray {

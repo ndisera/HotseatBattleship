@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity(), GameAdapter.OnGameSelectedListener {
 
         newGameButton.setOnClickListener {
             GameCollection.add(Game("Starting", "P1", PlayerInfo(5, Board()), PlayerInfo(5, Board())))
+            deleteGameButton.isEnabled = true
             GameCollection.reloadDataset()
             gameGrid.adapter.notifyDataSetChanged()
         }
@@ -58,6 +59,9 @@ class MainActivity : AppCompatActivity(), GameAdapter.OnGameSelectedListener {
             }
         }
 
+        if (GameCollection.size != 0) {
+            deleteGameButton.isEnabled = true
+        }
     }
 
     override fun gameSelected(game: Game) {
@@ -77,6 +81,10 @@ class MainActivity : AppCompatActivity(), GameAdapter.OnGameSelectedListener {
             GameCollection.delete(game)
             GameCollection.reloadDataset()
             deleteGameButton.text = "Delete an existing game"
+            if (GameCollection.size == 0) {
+                deleteGameButton.isEnabled = false
+            }
+            gameGrid.adapter.notifyDataSetChanged()
         }
     }
 

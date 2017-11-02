@@ -5,7 +5,7 @@ import java.util.*
 /**
  * Created by Nico on 10/23/2017.
  */
-data class Ship(val name: String, val location: IntArray, val positionStates: IntArray) {
+data class Ship(val name: String, val location: IntArray, var sunk: Boolean) {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -20,14 +20,5 @@ data class Ship(val name: String, val location: IntArray, val positionStates: In
 
     override fun hashCode(): Int {
         return Arrays.hashCode(location)
-    }
-
-    fun changePositionState(square: Int, state: String) {
-        when (state) {
-            "sunk" -> this.positionStates[square] = 3
-            "hit" -> this.positionStates[square] = 2
-            "miss" -> this.positionStates[square] = 1
-            else -> this.positionStates[square] = 0
-        }
     }
 }

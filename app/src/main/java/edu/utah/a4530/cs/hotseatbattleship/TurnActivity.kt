@@ -18,13 +18,9 @@ class TurnActivity : AppCompatActivity() {
         nextTurnButton.setOnClickListener {
             val lastPlayer = intent.getStringExtra("player")
             val i = Intent(this, PlayerActivity::class.java)
-            if (lastPlayer == "P1") {
-                i.putExtra("player", "P2")
-                GameCollection[index].turn = "P2"
-            }
-            else {
-                i.putExtra("player", "P1")
-                GameCollection[index].turn = "P1"
+            when (lastPlayer) {
+                "P1" -> i.putExtra("player", "P2")
+                else -> i.putExtra("player", "P1")
             }
             i.putExtra("index", index)
             startActivity(i)

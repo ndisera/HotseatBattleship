@@ -56,18 +56,60 @@ class PlayerActivity : AppCompatActivity() {
             else if (boardView.modelBoard.board[rect] == 1) {
                 boardView.modelBoard.board[rect] = 3
                 // need to check if this sinks the boat
+                // I guess this will involve going through the boats and seeing if this sinks it
+                // If it does then I need to update all of those points to a value of 4
+
             }
             // change status of game if it has already started
             if (GameCollection[index].state == "Starting") {
                 GameCollection[index].state = "In Progress"
             }
-            
+            when (player) {
+                "P1" -> GameCollection[index].turn = "P2"
+                else -> GameCollection[index].turn = "P1"
+            }
+
+            // check to convert hits to sinks (have to do each ship)
+            // this is pretty inefficient but gets the job done for now
+
+            for (ship in GameCollection[index].p1Info.board.shipArray) {
+                if (!ship.sunk) {
+                    checkShipSunk(ship, GameCollection[index].p1Info)
+                }
+            }
+            for (ship in GameCollection[index].p2Info.board.shipArray) {
+                if (!ship.sunk) {
+                    checkShipSunk(ship, GameCollection[index].p2Info)
+                }
+            }
+
             GameCollection.saveDataset()
             startActivity(i)
         }
         exitGameButton.setOnClickListener {
             val i = Intent(this, MainActivity::class.java)
             startActivity(i)
+        }
+    }
+
+    // checks if a ship was sunk, do this for the 5 ships on each board
+    private fun checkShipSunk(ship: Ship, pInfo: PlayerInfo) {
+        var sunk = true
+        for (coord in ship.location) {
+            if (pInfo.board.board[coord] != 3) {
+                sunk = false
+                break
+            }
+        }
+        ship.sunk = sunk
+        if (ship.sunk) {
+            for (coord in ship.location) {
+                pInfo.board.board[coord] = 4
+            }
+            pInfo.shipsLeft--
+            if (pInfo.shipsLeft == 0) {
+                // game has been won
+            }
         }
     }
 }
