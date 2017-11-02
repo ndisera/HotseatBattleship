@@ -52,6 +52,7 @@ class PlayerActivity : AppCompatActivity() {
                 boardView.modelBoard.board[rect] = 2
             }
             // Hit
+            // still need to know if this is working, assuming it is?
             else if (boardView.modelBoard.board[rect] == 1) {
                 boardView.modelBoard.board[rect] = 3
                 // need to check if this sinks the boat
