@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity(), GameAdapter.OnGameSelectedListener {
             }
             selectedIndex = (gameGrid.adapter as GameAdapter).selectedItemIndex
             i.putExtra("index", selectedIndex)
-            i.putExtra("player", "P1")
+            i.putExtra("player", GameCollection[selectedIndex].turn)
             startActivity(i)
         } else {
             // it's in delete mode so instead of starting a game, delete it

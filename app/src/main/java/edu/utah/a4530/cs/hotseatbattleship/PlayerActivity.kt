@@ -48,16 +48,25 @@ class PlayerActivity : AppCompatActivity() {
             val i = Intent(this, TurnActivity::class.java)
             i.putExtra("index", index)
             i.putExtra("player", player)
+
             if (boardView.modelBoard.board[rect] == 0) {
                 boardView.modelBoard.board[rect] = 2
             }
             // Hit
-            // still need to know if this is working, assuming it is?
             else if (boardView.modelBoard.board[rect] == 1) {
                 boardView.modelBoard.board[rect] = 3
                 // need to check if this sinks the boat
-                // also need to check if this will update the actual dataset
             }
+            // change status of game if it has already started
+            if (GameCollection[index].state == "Starting") {
+                GameCollection[index].state = "In Progress"
+            }
+            
+            GameCollection.saveDataset()
+            startActivity(i)
+        }
+        exitGameButton.setOnClickListener {
+            val i = Intent(this, MainActivity::class.java)
             startActivity(i)
         }
     }

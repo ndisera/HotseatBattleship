@@ -96,10 +96,9 @@ class BoardView : View {
             if (modelBoard.board[i] != 0 && modelBoard.board[i] != 1) {
                 paint.style = Paint.Style.FILL
                 rectGrid[i]?.let {
-                    paint.color = when (i) {
+                    paint.color = when (modelBoard.board[i]) {
                         2 -> Color.WHITE
-                        3 -> Color.RED
-                        4 -> Color.RED
+                        3, 4 -> Color.RED
                         else -> paint.color
                     }
                     if (i == 4) {
