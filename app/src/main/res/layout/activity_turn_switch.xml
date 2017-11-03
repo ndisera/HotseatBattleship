@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="edu.utah.a4530.cs.hotseatbattleship.TurnActivity">
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/resultMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1.0"
         android:gravity="center"
-        android:textSize="30sp"
-        android:layout_weight="1.0"/>
+        android:textSize="30sp" />
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="4.0"
         android:gravity="center"
-        android:textSize="30sp"
         android:text="Pass the device to your opponent."
-        android:layout_weight="4.0"/>
+        android:textSize="30sp" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/nextTurnButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Proceed"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:textSize="30sp"
-        android:layout_gravity="center"/>
+        android:text="Proceed"
+        android:textSize="30sp" />
 
 </LinearLayout>

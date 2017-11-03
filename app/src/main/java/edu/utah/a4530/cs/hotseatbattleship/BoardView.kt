@@ -119,8 +119,8 @@ class BoardView : View {
 
         if (displayShips) {
             for (ship in ships) {
-                val startIndex = Math.min(ship.location[0], ship.location[ship.location.size -1])
-                val endIndex = Math.max(ship.location[0], ship.location[ship.location.size -1])
+                val startIndex = Math.min(ship.location[0], ship.location[ship.location.size - 1])
+                val endIndex = Math.max(ship.location[0], ship.location[ship.location.size - 1])
 
                 // orientation shouldn't matter
                 val startRect = RectF(rectGrid[startIndex])

@@ -58,10 +58,6 @@ class MainActivity : AppCompatActivity(), GameAdapter.OnGameSelectedListener {
                 deleteGameButton.text = "Delete an existing game"
             }
         }
-
-        if (GameCollection.size != 0) {
-            deleteGameButton.isEnabled = true
-        }
     }
 
     override fun gameSelected(game: Game) {
@@ -103,6 +99,17 @@ class MainActivity : AppCompatActivity(), GameAdapter.OnGameSelectedListener {
     private fun externalStoragePermissionsChanged(writable: Boolean) {
         if (writable) {
             GameCollection.reloadDataset()
+            // enable application
+            newGameButton.isEnabled = true
+            gameGrid.isEnabled = true
+            if (GameCollection.size == 0) {
+                deleteGameButton.isEnabled = false
+            }
+        } else {
+            // disable application
+            newGameButton.isEnabled = false
+            deleteGameButton.isEnabled = false
+            gameGrid.isEnabled = false
         }
     }
 }
