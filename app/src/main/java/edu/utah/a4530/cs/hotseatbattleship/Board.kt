@@ -17,11 +17,11 @@ class Board {
 
     init {
         // randomly assign positions of ships
-        carrier = Ship("carrier", randomAssign(5), false)
-        battleship = Ship("battleship", randomAssign(4), false)
-        cruiser = Ship("cruiser", randomAssign(3), false)
-        submarine = Ship("submarine", randomAssign(3), false)
-        destroyer = Ship("destroyer", randomAssign(2), false)
+        carrier = Ship("Carrier", randomAssign(5), false)
+        battleship = Ship("Battleship", randomAssign(4), false)
+        cruiser = Ship("Cruiser", randomAssign(3), false)
+        submarine = Ship("Submarine", randomAssign(3), false)
+        destroyer = Ship("Destroyer", randomAssign(2), false)
         shipArray = arrayOf(carrier, battleship, cruiser, submarine, destroyer)
     }
 

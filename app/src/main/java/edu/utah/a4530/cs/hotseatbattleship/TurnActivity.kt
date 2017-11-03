@@ -14,6 +14,9 @@ class TurnActivity : AppCompatActivity() {
         setContentView(R.layout.activity_turn_switch)
         // still need to pass on index
         val index = intent.getIntExtra("index", 0)
+        val message = intent.getStringExtra("message")
+
+        resultMessage.text = message
 
         nextTurnButton.setOnClickListener {
             val lastPlayer = intent.getStringExtra("player")

@@ -43,11 +43,12 @@ class BoardView : View {
     // have an array of rects
     // for each rect in this array, draw it
     // should be relatively easy to setup in init or onSizeChanged
-    val rectGrid: Array<RectF?> = arrayOfNulls(100)
+    private val rectGrid: Array<RectF?> = arrayOfNulls(100)
     lateinit var paint: Paint
     // modelBoard
     // check if each cell is a hit, miss, null, or sunk
     lateinit var modelBoard: Board
+    lateinit var ships: Array<Ship>
     var displayShips = false
     private var initialLeft = 0f
     private var initialTop = 0f
@@ -116,7 +117,19 @@ class BoardView : View {
             paint.style = Paint.Style.STROKE
         }
 
-        // will have to check on what to display for each board
+        if (displayShips) {
+            for (ship in ships) {
+                val startIndex = Math.min(ship.location[0], ship.location[ship.location.size -1])
+                val endIndex = Math.max(ship.location[0], ship.location[ship.location.size -1])
+
+                // orientation shouldn't matter
+                val startRect = RectF(rectGrid[startIndex])
+                val endRect = RectF(rectGrid[endIndex])
+                paint.color = Color.BLACK
+                canvas.drawRect(startRect.left, startRect.top, endRect.right, endRect.bottom, paint)
+            }
+            paint.color = Color.LTGRAY
+        }
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -163,16 +176,11 @@ class BoardView : View {
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if (event !is MotionEvent)
             return super.onTouchEvent(event)
-        // do stuff
-        // use event.x, event.y to detect where user clicked
-        // could use int instead of bool, 0 if no ship, 1 if ship, 2 if miss, 3 if hit, 4 if sunk
-        // convert x and y to cell
-
-        // I think this portion is incorrect
         val locationX = (event.x - initialLeft) / cellLength
         val locationY = (event.y - initialTop) / cellLength
         val index = (locationY.toInt() * 10 + locationX.toInt())
         invokeRectListener(index)
+
         // check that index in board hasn't been attempted
         // make change to that index and go to turn screen
 
