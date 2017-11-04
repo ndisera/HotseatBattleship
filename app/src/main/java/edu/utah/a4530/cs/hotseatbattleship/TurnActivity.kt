@@ -27,6 +27,7 @@ class TurnActivity : AppCompatActivity() {
             }
             i.putExtra("index", index)
             startActivity(i)
+            finish()
         }
     }
 

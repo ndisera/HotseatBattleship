@@ -72,6 +72,7 @@ class MainActivity : AppCompatActivity(), GameAdapter.OnGameSelectedListener {
             i.putExtra("index", selectedIndex)
             i.putExtra("player", GameCollection[selectedIndex].turn)
             startActivity(i)
+            finish()
         } else {
             // it's in delete mode so instead of starting a game, delete it
             GameCollection.delete(game)

@@ -97,11 +97,13 @@ class PlayerActivity : AppCompatActivity() {
             GameCollection.saveDataset()
             i.putExtra("message", message)
             startActivity(i)
+            finish()
         }
 
         exitGameButton.setOnClickListener {
             val i = Intent(this, MainActivity::class.java)
             startActivity(i)
+            finish()
         }
     }
 
