@@ -14,20 +14,24 @@
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/newGameButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create new game"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="Create Multiplayer Game" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/newAIGameButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/newGameButton"
+            android:text="Create AI Game" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/deleteGameButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/newAIGameButton"
             android:enabled="false"
-            android:text="Delete an existing game"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="Delete A Game" />
 
     </android.support.constraint.ConstraintLayout>
 

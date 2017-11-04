@@ -14,6 +14,7 @@ class Board {
     private val submarine: Ship
     private val destroyer: Ship
     val shipArray: Array<Ship>
+    val hitList: MutableList<Int>
 
     init {
         // randomly assign positions of ships
@@ -23,7 +24,86 @@ class Board {
         submarine = Ship("Submarine", randomAssign(3), false)
         destroyer = Ship("Destroyer", randomAssign(2), false)
         shipArray = arrayOf(carrier, battleship, cruiser, submarine, destroyer)
+        hitList = mutableListOf()
     }
+
+    // ----------------------AI Methods Begin-----------------------
+
+    fun randomShot(): Int {
+        var start = (0..99).random()
+        while (board[start] != 0 && board[start] != 1) {
+            start = (0..99).random()
+        }
+        return start
+    }
+
+    // guess up, down, left, or right (if valid)
+    // keep in mind it's still possible to sink a ship from this
+    fun fireAround(point: Int): Int {
+        val nextPossibleHit: MutableList<Int> = mutableListOf()
+        // not too high
+        if (point >= 10 && (board[point - 10] == 0 || board[point - 10] == 1)) {
+            nextPossibleHit.add(point - 10)
+        }
+        // not too low
+        if (point < 90 && (board[point + 10] == 0 || board[point + 10] == 1)) {
+            nextPossibleHit.add(point + 10)
+        }
+        // not too far left
+        if (point % 10 != 0 && (board[point - 1] == 0 || board[point - 1] == 1)) {
+            nextPossibleHit.add(point - 1)
+        }
+        // not too far right
+        if (point % 10 != 9 && (board[point + 1] == 0 || board[point + 1] == 1)) {
+            nextPossibleHit.add(point + 1)
+        }
+
+        // return -1 if no surrounding points are valid
+        if (nextPossibleHit.isEmpty()) {
+            return -1
+        }
+
+        if (nextPossibleHit.size < 2) {
+            return nextPossibleHit[0]
+        }
+        return nextPossibleHit[(0 until nextPossibleHit.size).random()]
+    }
+
+    fun followingHit(): Int {
+        val largest = hitList.max() ?: 0
+
+        for (point in hitList) {
+            if (point % 10 != 9 && point + 1 == largest && largest % 10 != 9 && (board[largest + 1] == 0 || board[largest + 1] == 1)) {
+                return largest + 1
+            } else if (point < 90 && point + 10 == largest && largest < 90 && (board[largest + 10] == 0 ||board[largest + 10] == 1)) {
+                return largest + 10
+            }
+        }
+
+        val smallest = hitList.min() ?: 0
+
+        for (point in hitList) {
+            if (point % 10 != 0 && point - 1 == smallest && smallest % 10 != 0 && (board[smallest - 1] == 0 || board[smallest - 1] == 1)) {
+                return smallest - 1
+            } else if (point >= 10 && point - 10 == smallest && smallest >= 10 && (board[smallest - 10] == 0 || board[smallest - 10] == 1)) {
+                return smallest - 10
+            }
+        }
+
+        // otherwise we're dealing with multiple ships
+        var nextGuess = fireAround(largest)
+        if (nextGuess != -1) {
+            return nextGuess
+        }
+        nextGuess = fireAround(smallest)
+        return nextGuess
+    }
+
+    fun cleanseHitList() {
+        hitList.filter { board[it] != 3 }.forEach { hitList.remove(it) }
+    }
+
+    // --------------------AI Methods End-----------------------
 
     private fun randomAssign(size: Int): IntArray {
         val options = mutableListOf<IntArray>()

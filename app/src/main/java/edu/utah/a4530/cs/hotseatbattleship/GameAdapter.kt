@@ -47,8 +47,14 @@ class GameAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
         holder.gameSummaryView.state = "Status: ${datasetItem.state}"
         holder.gameSummaryView.turn = "Turn: ${datasetItem.turn}"
-        holder.gameSummaryView.p1UnsunkShips = "P1: ${datasetItem.p1Info.shipsLeft} ships left"
-        holder.gameSummaryView.p2UnsunkShips = "P2: ${datasetItem.p2Info.shipsLeft} ships left"
+        if (datasetItem.turn == "You" || datasetItem.state == "You Won" || datasetItem.state == "AI Won") {
+            holder.gameSummaryView.p1UnsunkShips = "You: ${datasetItem.p1Info.shipsLeft} ships left"
+            holder.gameSummaryView.p2UnsunkShips = "AI: ${datasetItem.p2Info.shipsLeft} ships left"
+        }
+        else {
+            holder.gameSummaryView.p1UnsunkShips = "P1: ${datasetItem.p1Info.shipsLeft} ships left"
+            holder.gameSummaryView.p2UnsunkShips = "P2: ${datasetItem.p2Info.shipsLeft} ships left"
+        }
 
     }
 

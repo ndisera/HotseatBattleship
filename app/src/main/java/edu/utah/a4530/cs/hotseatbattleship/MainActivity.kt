@@ -51,17 +51,24 @@ class MainActivity : AppCompatActivity(), GameAdapter.OnGameSelectedListener {
             gameGrid.adapter.notifyDataSetChanged()
         }
 
+        newAIGameButton.setOnClickListener {
+            GameCollection.add(Game("Starting", "You", PlayerInfo(5, Board()), PlayerInfo(5, Board())))
+            deleteGameButton.isEnabled = true
+            GameCollection.reloadDataset()
+            gameGrid.adapter.notifyDataSetChanged()
+        }
+
         deleteGameButton.setOnClickListener {
-            if (deleteGameButton.text == "Delete an existing game") {
-                deleteGameButton.text = "Choose game to delete"
+            if (deleteGameButton.text == "Delete A Game") {
+                deleteGameButton.text = "Choose Game to Delete"
             } else {
-                deleteGameButton.text = "Delete an existing game"
+                deleteGameButton.text = "Delete A Game"
             }
         }
     }
 
     override fun gameSelected(game: Game) {
-        if (deleteGameButton.text == "Delete an existing game") {
+        if (deleteGameButton.text == "Delete A Game") {
             val i = Intent(this, PlayerActivity::class.java)
 
             // pass in index to grab game from game collection (not sure if this index will work)
@@ -77,10 +84,8 @@ class MainActivity : AppCompatActivity(), GameAdapter.OnGameSelectedListener {
             // it's in delete mode so instead of starting a game, delete it
             GameCollection.delete(game)
             GameCollection.reloadDataset()
-            deleteGameButton.text = "Delete an existing game"
-            if (GameCollection.size == 0) {
-                deleteGameButton.isEnabled = false
-            }
+            deleteGameButton.text = "Delete A Game"
+            deleteGameButton.isEnabled = GameCollection.size != 0
             gameGrid.adapter.notifyDataSetChanged()
         }
     }
@@ -103,9 +108,7 @@ class MainActivity : AppCompatActivity(), GameAdapter.OnGameSelectedListener {
             // enable application
             newGameButton.isEnabled = true
             gameGrid.isEnabled = true
-            if (GameCollection.size == 0) {
-                deleteGameButton.isEnabled = false
-            }
+            deleteGameButton.isEnabled = GameCollection.size != 0
         } else {
             // disable application
             newGameButton.isEnabled = false

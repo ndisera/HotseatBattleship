@@ -16,9 +16,19 @@ class TurnActivity : AppCompatActivity() {
         val index = intent.getIntExtra("index", 0)
         val message = intent.getStringExtra("message")
 
+        if (GameCollection[index].turn == "Game Over") {
+            passText.text = ""
+        }
         resultMessage.text = message
 
         nextTurnButton.setOnClickListener {
+            if (GameCollection[index].turn == "Game Over") {
+                val i = Intent(this, MainActivity::class.java)
+                startActivity(i)
+                finish()
+                return@setOnClickListener
+            }
+
             val lastPlayer = intent.getStringExtra("player")
             val i = Intent(this, PlayerActivity::class.java)
             when (lastPlayer) {

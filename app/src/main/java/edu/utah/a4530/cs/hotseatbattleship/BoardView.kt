@@ -123,10 +123,19 @@ class BoardView : View {
                 val endIndex = Math.max(ship.location[0], ship.location[ship.location.size - 1])
 
                 // orientation shouldn't matter
-                val startRect = RectF(rectGrid[startIndex])
-                val endRect = RectF(rectGrid[endIndex])
                 paint.color = Color.BLACK
-                canvas.drawRect(startRect.left, startRect.top, endRect.right, endRect.bottom, paint)
+                canvas.drawRect(rectGrid[startIndex]!!.left, rectGrid[startIndex]!!.top, rectGrid[endIndex]!!.right, rectGrid[endIndex]!!.bottom, paint)
+            }
+            paint.color = Color.LTGRAY
+        } else {
+            for (ship in ships) {
+                if (ship.sunk) {
+                    val startIndex = Math.min(ship.location[0], ship.location[ship.location.size - 1])
+                    val endIndex = Math.max(ship.location[0], ship.location[ship.location.size - 1])
+
+                    paint.color = Color.BLACK
+                    canvas.drawRect(rectGrid[startIndex]!!.left, rectGrid[startIndex]!!.top, rectGrid[endIndex]!!.right, rectGrid[endIndex]!!.bottom, paint)
+                }
             }
             paint.color = Color.LTGRAY
         }
