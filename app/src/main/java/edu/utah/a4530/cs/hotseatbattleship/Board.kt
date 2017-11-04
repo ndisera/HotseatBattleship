@@ -3,6 +3,7 @@ package edu.utah.a4530.cs.hotseatbattleship
 import java.util.*
 
 /**
+ * Represents a board in the model. Contains ship info, and methods for the AI and setting up the board.
  * Created by Nico on 10/23/2017.
  */
 class Board {

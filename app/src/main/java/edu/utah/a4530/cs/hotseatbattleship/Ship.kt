@@ -3,6 +3,7 @@ package edu.utah.a4530.cs.hotseatbattleship
 import java.util.*
 
 /**
+ * Represents a ship in the model.
  * Created by Nico on 10/23/2017.
  */
 data class Ship(val name: String, val location: IntArray, var sunk: Boolean) {

@@ -23,7 +23,7 @@ import android.content.Context
 import java.io.*
 import java.nio.charset.Charset
 
-private const val byteArraySize: Int = 32768
+private const val BYTE_ARRAY_SIZE: Int = 32768
 
 internal fun String.Companion.fromAsset(context: Context, assetPath: String, charset: Charset = Charsets.UTF_8): String? {
     return try {
@@ -66,7 +66,7 @@ internal fun String.toFile(filePath: String, appendToExistingFile: Boolean = fal
 internal fun String.Companion.fromInputStream(inputStream: InputStream, charset: Charset = Charsets.UTF_8): String? {
     return try {
         ByteArrayOutputStream().use { byteArrayOutputStream: ByteArrayOutputStream ->
-            val buffer = ByteArray(byteArraySize)
+            val buffer = ByteArray(BYTE_ARRAY_SIZE)
             var readLength: Int = inputStream.read(buffer)
             while (readLength != -1) {
                 byteArrayOutputStream.write(buffer, 0, readLength)

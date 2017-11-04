@@ -8,9 +8,9 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import org.jetbrains.annotations.NotNull
 
 /**
+ * Represents the battleship board the user interacts with.
  * Created by Nico on 10/31/2017.
  */
 class BoardView : View {
@@ -40,13 +40,8 @@ class BoardView : View {
         modelBoard = Board()
     }
 
-    // have an array of rects
-    // for each rect in this array, draw it
-    // should be relatively easy to setup in init or onSizeChanged
     private val rectGrid: Array<RectF?> = arrayOfNulls(100)
     lateinit var paint: Paint
-    // modelBoard
-    // check if each cell is a hit, miss, null, or sunk
     lateinit var modelBoard: Board
     lateinit var ships: Array<Ship>
     var displayShips = false
@@ -86,17 +81,13 @@ class BoardView : View {
         if (canvas !is Canvas) return
 
         for (i in 0..99) {
-            // might want to think of a way to outline the edges of ships as a whole
-            // probably have to drawRect around the whole thing after this for loop?
-            // would need left, top, right, and bottom
+            // fill in if a ship is here
             if (displayShips && (modelBoard.board[i] == 1 || modelBoard.board[i] == 3)) {
                 paint.style = Paint.Style.FILL_AND_STROKE
             }
             canvas.drawRect(rectGrid[i], paint)
 
-            // might not check for anything other than misses
-            // can handle hits and sinks in a separate check (or can I?)
-
+            // draw according to value
             if (modelBoard.board[i] != 0 && modelBoard.board[i] != 1) {
                 paint.style = Paint.Style.FILL
                 rectGrid[i]?.let {
@@ -117,6 +108,7 @@ class BoardView : View {
             paint.style = Paint.Style.STROKE
         }
 
+        // for the noneditable screen
         if (displayShips) {
             for (ship in ships) {
                 val startIndex = Math.min(ship.location[0], ship.location[ship.location.size - 1])
@@ -128,6 +120,7 @@ class BoardView : View {
             }
             paint.color = Color.LTGRAY
         } else {
+            // to help distinguish ships if any are next to each other
             for (ship in ships) {
                 if (ship.sunk) {
                     val startIndex = Math.min(ship.location[0], ship.location[ship.location.size - 1])
@@ -181,7 +174,6 @@ class BoardView : View {
         }
     }
 
-    // probably need to put this in PlayerActivity since this can trigger an intent
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if (event !is MotionEvent)
             return super.onTouchEvent(event)
@@ -189,9 +181,6 @@ class BoardView : View {
         val locationY = (event.y - initialTop) / cellLength
         val index = (locationY.toInt() * 10 + locationX.toInt())
         invokeRectListener(index)
-
-        // check that index in board hasn't been attempted
-        // make change to that index and go to turn screen
 
         return super.onTouchEvent(event)
     }

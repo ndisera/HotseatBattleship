@@ -7,12 +7,13 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 
-
+/**
+ * Activity that handles creating, starting, and deleting games.
+ * Created by Nico on 10/26/2017.
+ */
 class MainActivity : AppCompatActivity(), GameAdapter.OnGameSelectedListener {
 
     companion object {
@@ -60,13 +61,16 @@ class MainActivity : AppCompatActivity(), GameAdapter.OnGameSelectedListener {
 
         deleteGameButton.setOnClickListener {
             if (deleteGameButton.text == "Delete A Game") {
-                deleteGameButton.text = "Choose Game to Delete"
+                deleteGameButton.text = getString(R.string.delete_message)
             } else {
-                deleteGameButton.text = "Delete A Game"
+                deleteGameButton.text = getString(R.string.delete_game)
             }
         }
     }
 
+    /**
+     * Starts or deletes a game.
+     */
     override fun gameSelected(game: Game) {
         if (deleteGameButton.text == "Delete A Game") {
             val i = Intent(this, PlayerActivity::class.java)
@@ -84,7 +88,7 @@ class MainActivity : AppCompatActivity(), GameAdapter.OnGameSelectedListener {
             // it's in delete mode so instead of starting a game, delete it
             GameCollection.delete(game)
             GameCollection.reloadDataset()
-            deleteGameButton.text = "Delete A Game"
+            deleteGameButton.text = getString(R.string.delete_game)
             deleteGameButton.isEnabled = GameCollection.size != 0
             gameGrid.adapter.notifyDataSetChanged()
         }

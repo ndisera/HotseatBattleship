@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Hotseat Battleship</string>
+    <string name="delete_message">Choose Game to Delete</string>
+    <string name="delete_game">Delete A Game</string>
+    <string name="player_1">Player 1</string>
+    <string name="you">You</string>
+    <string name="player_2">Player 2</string>
+    <string name="proceed">Proceed</string>
+    <string name="pass_message">Pass the device to your opponent.</string>
+    <string name="exit">Exit Game</string>
+    <string name="ai_create">Create AI Game</string>
+    <string name="mp_create">Create Multiplayer Game</string>
 </resources>

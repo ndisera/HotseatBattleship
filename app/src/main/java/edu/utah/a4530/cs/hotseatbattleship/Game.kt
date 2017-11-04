@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import org.json.JSONException
 
 /**
+ * Represents a game in the model. Contains information for both players as well as independent info.
  * Created by Nico on 10/23/2017.
  */
 data class Game(var state: String, var turn: String, val p1Info: PlayerInfo, val p2Info: PlayerInfo) {

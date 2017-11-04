@@ -4,6 +4,7 @@ import android.os.Environment
 import java.io.File
 
 /**
+ * Global data collection that keeps track of game information.
  * Created by Nico on 10/23/2017.
  */
 object GameCollection {

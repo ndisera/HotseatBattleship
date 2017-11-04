@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 
 /**
+ * Adapter for the RecyclerView.
  * Created by Nico on 10/26/2017.
  */
 class GameAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

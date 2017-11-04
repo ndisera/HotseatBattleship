@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.view_game_summary.view.p1UnsunkShipsTextVi
 import kotlinx.android.synthetic.main.view_game_summary.view.p2UnsunkShipsTextView as importedP2UnsunkShipsTextView
 
 /**
+ * View that displays a summary of information about a game.
  * Created by Nico on 10/26/2017.
  */
 class GameSummaryView : FrameLayout {
